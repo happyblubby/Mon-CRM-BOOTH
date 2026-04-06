@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
@@ -17,12 +15,12 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import NotificationBell from './components/notifications/NotificationBell';
+import NotificationBell from '@/components/notifications/NotificationBell';
 import { User } from '@/api/entities';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
-import FloatingChatWidget from './components/chat/FloatingChatWidget';
+import FloatingChatWidget from '@/components/chat/FloatingChatWidget';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -415,4 +413,3 @@ export default function Layout({ children, currentPageName }) {
     </div>
   );
 }
-
