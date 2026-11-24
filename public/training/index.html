@@ -90,6 +90,19 @@ p{margin:0}
 .wd.done i{background:var(--ok)}
 .wd.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 .wd.today small{color:var(--accent)}
+button.wd{cursor:pointer;width:100%}
+.wd.sel{background:var(--accent-soft)}
+.picker{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.pk{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 3px 9px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:inherit;min-width:0;transition:background .15s,border-color .15s}
+.pk b{font-family:var(--f-display);font-size:21px;font-weight:700;line-height:1}
+.pk small{font-size:10.5px;font-weight:600;color:var(--muted);text-align:center;line-height:1.15}
+.pk.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.pk.on small{color:var(--on-accent);opacity:.85}
+.pk .td{position:absolute;top:6px;right:7px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.pk.on .td{background:var(--on-accent)}
+.pk .dn{position:absolute;top:4px;left:5px;width:14px;height:14px;border-radius:50%;background:var(--ok);color:#06150e;display:grid;place-items:center}
+.pk .dn svg{width:9px;height:9px}
+.pickhint{font-size:12.5px;color:var(--muted);margin-top:-6px}
 
 /* hero */
 .hero{position:relative;overflow:hidden;padding:18px 18px 18px;display:grid;grid-template-columns:1fr 132px;gap:6px;align-items:center;background:
@@ -461,6 +474,8 @@ const DAY = Object.fromEntries(DAYS.map(d=>[d.id,d]));
 const WEEKMAP = {1:"j1",2:"j2",3:"j3",4:"j4",5:"j5"}; // lundi → vendredi
 const STRENGTH = ["j1","j2","j4","j5"];
 const GOAL_LIFTS = ["deadlift","backsquat","row","pullup","dips","ohp"];
+const SHORT={j1:"Dos + Pecs",j2:"Jambes",j3:"Récup",j4:"Épaules Bras",j5:"Transport"};
+const DOWFULL=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
 const workEx = d=>d.ex.filter(k=>EX[k].kind!=="warm");
 function blockLabels(d){ const m={}; d.blocks.forEach((b,i)=>{ const L=String.fromCharCode(65+i); b.forEach((k,j)=>{ m[k]={L,lab:b.length>1?L+(j+1):L,size:b.length,block:b}; }); }); return m; }
 const blockKind = n=>n===1?"Exercice principal":n===2?"Superset":"Triset";
@@ -800,6 +815,15 @@ function ringSmall(v,max,size=58){
   const r=size/2-6, c=2*Math.PI*r, f=Math.min(1,v/max);
   return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="transform:rotate(-90deg)"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--surface2)" stroke-width="7"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${f>=1?"var(--ok)":"var(--accent)"}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-f)}"/></svg>`;
 }
+let pick=todayId();
+function dayPicker(sel,link){
+  const tid=todayId(), done=new Set(weekSessions().map(s=>s.dayId));
+  return `<div class="picker" role="tablist" aria-label="Choisir une séance">${DAYS.map(d=>{
+    const inner=`${done.has(d.id)?`<span class="dn">${IC.check}</span>`:""}${d.id===tid?`<span class="td" title="Aujourd'hui"></span>`:""}<b>J${d.n}</b><small>${SHORT[d.id]}</small>`;
+    return link?`<a class="pk ${sel===d.id?"on":""}" href="#${d.id}" role="tab" aria-selected="${sel===d.id}">${inner}</a>`
+      :`<button class="pk ${sel===d.id?"on":""}" data-a="pick" data-day="${d.id}" role="tab" aria-selected="${sel===d.id}">${inner}</button>`;
+  }).join("")}</div>`;
+}
 function viewHome(){
   const now=new Date(), m=monday(), ws=weekSessions();
   const doneIds=new Set(ws.map(s=>s.dayId));
@@ -808,22 +832,24 @@ function viewHome(){
     const d=new Date(m); d.setDate(m.getDate()+i);
     const id=WEEKMAP[d.getDay()];
     const done=S.sessions.some(s=>sameDay(new Date(s.date),d));
-    strip+=`<div class="wd ${id?"":"rest"} ${done?"done":""} ${sameDay(d,now)?"today":""}"><small>${DOW[d.getDay()]}</small><b class="num">${d.getDate()}</b><i></i></div>`;
+    strip+=`<button class="wd ${id?"":"rest"} ${done?"done":""} ${sameDay(d,now)?"today":""} ${id&&id===pick?"sel":""}" data-a="pick" data-day="${id||""}" aria-label="${DOWFULL[d.getDay()]} ${d.getDate()}"><small>${DOW[d.getDay()]}</small><b class="num">${d.getDate()}</b><i></i></button>`;
   }
-  const tid=todayId(), td=tid?DAY[tid]:null;
+  const tid=todayId(), td=pick?DAY[pick]:null;
+  const plannedDow=id=>DOWFULL[+Object.keys(WEEKMAP).find(k=>WEEKMAP[k]===id)];
   const strengthDone=STRENGTH.filter(id=>doneIds.has(id)).length;
   let hero;
   if(td){
     const done=doneIds.has(td.id)&&S.sessions.some(s=>s.dayId===td.id&&sameDay(new Date(s.date),now));
     hero=`<section class="card hero">
       <div>
-        <div class="eyebrow ac">Aujourd'hui · Jour ${td.n}</div>
+        <div class="eyebrow ac">${td.id===tid?"Aujourd'hui":"Séance choisie"} · Jour ${td.n}</div>
         <h2 style="margin-top:6px">${td.title}</h2>
         <div class="muted" style="font-weight:600;margin-top:2px">${td.sub}</div>
         <div class="meta">
           ${td.recovery?`<span class="badge">30–45 min</span>`:`<span class="badge">${workEx(td).length} exercices</span><span class="badge">≈ ${estMin(td)} min</span>`}
           ${td.tag?`<span class="badge am">${td.tag}</span>`:""}
-          ${done?`<span class="badge ok">Fait ✓</span>`:""}
+          ${done?`<span class="badge ok">Fait aujourd'hui ✓</span>`:""}
+          ${td.id!==tid?`<span class="badge">Prévu le ${plannedDow(td.id)}</span>`:""}
         </div>
       </div>
       ${fig(td.pose,{anim:true})}
@@ -836,7 +862,7 @@ function viewHome(){
   } else {
     hero=`<section class="card hero">
       <div><div class="eyebrow ac">Aujourd'hui · Repos</div><h2 style="margin-top:6px">Repos complet</h2>
-      <p class="obj">Surcompensation musculaire, reconstruction tissulaire et recharge glycogénique. Sports annexes possibles, sans viser la performance.</p></div>
+      <p class="obj">Surcompensation musculaire, reconstruction tissulaire et recharge glycogénique. Envie de t'entraîner quand même ? Choisis une séance juste au-dessus.</p></div>
       ${fig("walk",{anim:true})}
     </section>`;
   }
@@ -854,12 +880,14 @@ function viewHome(){
       <div><div class="eyebrow">Semaine ${isoWeek()} · Hypertrophie tactique</div><h1 style="margin-top:6px">Densité <span>&amp;</span><br>Épaisseur</h1></div>
     </header>
     <div class="week">${strip}</div>
+    <div class="sec-title" style="margin-top:4px"><h3>Choisis ta séance</h3>${pick!==tid?`<button class="badge ac" data-a="pick" data-day="${tid||""}">Revenir à aujourd'hui</button>`:`<span class="muted" style="font-size:12.5px">n'importe quel jour</span>`}</div>
+    ${dayPicker(pick,false)}
     ${hero}
     <div class="card ringbox">${ringSmall(strengthDone,4)}
       <div style="min-width:0"><div style="font-family:var(--f-display);font-size:24px;font-weight:700;line-height:1">${strengthDone} / 4 séances</div>
       <div class="muted" style="font-size:13px;margin-top:3px">${strengthDone>=4?"Semaine complète. Profite du repos.":`Encore ${4-strengthDone} séance${4-strengthDone>1?"s":""} de force cette semaine`}${ton?` · ${fmt(Math.round(ton/100)/10)} t soulevées`:""}</div></div>
     </div>
-    <div class="sec-title"><h3>Le programme</h3><span class="muted" style="font-size:12.5px">Lun → Ven</span></div>
+    <div class="sec-title"><h3>Toutes les séances</h3><span class="muted" style="font-size:12.5px">touche pour le détail</span></div>
     <div class="days">${days}</div>
     <div class="card rule" style="margin-top:4px"><div class="ic">${IC.info}</div><div><h4>Équipement</h4><p>Salle complète + <strong>gilet lesté modulable 10 à 20 kg</strong> coupe courte (porte-plaques) pour garder la mobilité du buste. Au-delà de 20 kg aux tractions et aux dips, utiliser une ceinture de lest.</p></div></div>
   </div>`;
@@ -902,8 +930,9 @@ function viewDay(d){
   const series=workEx(d).reduce((a,k)=>a+(EX[k].kind?0:EX[k].sets),0);
   return `<div class="wrap stack" style="padding-bottom:calc(190px + env(safe-area-inset-bottom,0px))">
     <a class="back" href="#semaine">${IC.left} Semaine</a>
+    ${dayPicker(d.id,true)}
     <header class="dhead">
-      <div class="eyebrow ac">Jour ${d.n}${d.tag?" · "+d.tag:""}</div>
+      <div class="eyebrow ac">Jour ${d.n}${d.tag?" · "+d.tag:""}${d.id===todayId()?" · aujourd'hui":""}</div>
       <h1 style="margin-top:6px">${d.title}</h1>
       <div style="font-family:var(--f-display);font-size:22px;font-weight:600;color:var(--muted);text-transform:uppercase;margin-top:2px">${d.sub}</div>
       <p><strong style="color:var(--fg)">Objectif :</strong> ${d.obj}</p>
@@ -1283,6 +1312,7 @@ document.addEventListener("click",ev=>{
       if(W&&W.dayId!==b.dataset.day){ modal(`<h3>Une séance est en cours</h3><p class="muted">Jour ${DAY[W.dayId].n} n'est pas terminé. Le remplacer par Jour ${DAY[b.dataset.day].n} ?</p><div class="btns"><button class="btn ghost sm" data-a="modal-close">Reprendre l'actuelle</button><button class="btn pri sm" data-a="start-force" data-day="${b.dataset.day}">Remplacer</button></div>`); return; }
       if(W){ resumeWk(); return; }
       startWorkout(b.dataset.day); break;
+    case "pick": pick=b.dataset.day||null; render(); break;
     case "start-force": closeModal(); startWorkout(b.dataset.day); break;
     case "toggle-ex": openEx=openEx===b.dataset.ex?null:b.dataset.ex; render(); break;
     case "wk-close": modal(`<h3>Quitter la séance ?</h3><p class="muted">Tes séries validées sont gardées : tu pourras reprendre depuis l'accueil, ou abandonner la séance.</p><div class="btns"><button class="btn ghost sm" data-a="minimize">Mettre en pause</button><button class="btn sm" style="background:var(--danger);color:#fff" data-a="abandon">Abandonner</button></div>`); break;
