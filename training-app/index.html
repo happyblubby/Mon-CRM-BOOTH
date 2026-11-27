@@ -282,6 +282,18 @@ details.tips p{padding:0 0 14px;color:var(--muted);line-height:1.55}
 .sumrow:last-child{border-bottom:0}
 .sumrow .r{font-weight:600;text-align:right}
 .up{color:var(--ok)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:60px 1fr auto;gap:10px;align-items:center;padding:10px;border-radius:var(--r-md);background:var(--surface2)}
+.opt .thumb{width:60px;height:60px;border-radius:12px;background:var(--surface);display:grid;place-items:center;overflow:hidden}
+.opt .thumb svg{width:66px;height:66px}
+.opt h4{margin:0;font-size:14.5px;line-height:1.25}
+.opt .sub{font-size:12.5px;color:var(--muted)}
+.opt .why{font-size:12.5px;margin-top:3px;line-height:1.4}
+.opt .btn{width:auto;padding:0 14px;height:40px;font-size:15px}
+.think{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;padding:12px 14px;border-radius:var(--r-md);background:var(--accent-soft)}
+.think .badge{margin-left:auto}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--accent-soft);border-top-color:var(--accent);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* progress page */
 .chart{padding:14px 14px 10px}
@@ -376,18 +388,23 @@ const EX = {
     ]},
 
   /* ---- Jour 1 : Dos + Pectoraux ---- */
-  row:{name:"Rowing barre buste penché",note:"Prise pronation",sets:4,lo:6,hi:8,rest:90,load:"kg",step:2.5,pose:"row",
+  row:{name:"Rowing barre buste penché",note:"Prise pronation",sets:4,lo:6,hi:8,rest:120,load:"kg",step:2.5,pose:"row",
     tips:"Buste à 45°, dos plat. Tirer la barre vers le bas du sternum, marquer 1 s d'arrêt en contraction haute, redescendre en 3 s.",muscles:"Trapèzes moyens · Rhomboïdes · Grand dorsal · Lombaires"},
-  incline:{name:"Développé incliné haltères",note:"Banc à 30°",sets:4,lo:6,hi:8,rest:90,load:"kg",step:2,unitW:"kg / haltère",pose:"incline",
+  incline:{name:"Développé incliné haltères",note:"Banc à 30°",sets:4,lo:6,hi:8,rest:120,load:"kg",step:2,unitW:"kg / haltère",pose:"incline",
     tips:"Banc réglé à 30°, omoplates serrées. Descente contrôlée sur 3 s jusqu'à l'étirement complet du haut des pectoraux, poussée puissante.",muscles:"Haut des pectoraux · Deltoïdes antérieurs · Triceps"},
-  pullup:{name:"Tractions lestées",note:"Gilet ou ceinture",sets:4,lo:5,hi:8,rest:75,load:"lest",step:2.5,pose:"pullup",
+  pullup:{name:"Tractions lestées",note:"Gilet ou ceinture",sets:4,lo:5,hi:8,rest:90,load:"lest",step:2.5,pose:"pullup",
     tips:"Prise pronation légèrement plus large que les épaules. Partir bras tendus, amener le haut de la poitrine vers la barre, descente en 3 s.",muscles:"Grand dorsal · Biceps · Trapèzes inférieurs"},
-  dips:{name:"Dips lestés",note:"Buste penché · gilet ou ceinture",sets:3,lo:6,hi:10,rest:75,load:"lest",step:2.5,pose:"dips",
+  dips:{name:"Dips lestés",note:"Buste penché · gilet ou ceinture",sets:4,lo:6,hi:10,rest:90,load:"lest",step:2.5,pose:"dips",
     tips:"Buste incliné d'environ 30° vers l'avant, coudes légèrement ouverts. Descendre jusqu'à l'étirement des pectoraux (épaules au niveau des coudes), remonter sans verrouiller brutalement.",muscles:"Bas des pectoraux · Triceps · Deltoïdes antérieurs"},
-  dbrow:{name:"Rowing haltère unilatéral",note:"Bûcheron",sets:3,lo:8,hi:10,per:"bras",rest:60,load:"kg",step:2,pose:"dbrow",
+  dbrow:{name:"Rowing haltère unilatéral",note:"Bûcheron",sets:4,lo:8,hi:10,per:"bras",rest:60,load:"kg",step:2,pose:"dbrow",
     tips:"Main libre en appui sur un banc, dos plat. Tirer le coude vers la hanche, 1 s de pause en haut, descente lente pour étirer le dorsal.",muscles:"Grand dorsal · Rhomboïdes · Biceps"},
   cablefly:{name:"Écarté poulie vis-à-vis",note:"Poulies hautes vers le bas",sets:3,lo:12,hi:15,rest:60,load:"kg",step:2.5,unitW:"kg / côté",pose:"cablefly",
     tips:"Bras légèrement fléchis et fixes. Rapprocher les mains devant le bas du sternum, 1 s de contraction, retour sur 3 s jusqu'à l'étirement.",muscles:"Pectoraux · Densité du bas des pecs"},
+
+  pullover:{name:"Pull-over poulie haute",note:"Corde ou barre droite, bras tendus",sets:3,lo:12,hi:15,rest:60,load:"kg",step:2.5,pose:"pullover",
+    tips:"Buste légèrement penché, bras presque tendus. Ramener la barre jusqu'aux cuisses en contractant le dorsal, 1 s de pause, remonter lentement jusqu'à l'étirement.",muscles:"Grand dorsal · Grand rond"},
+  pushupf:{name:"Pompes au gilet",note:"Finisher · 1–2 reps de l'échec",sets:2,lo:10,hi:20,rest:60,load:"lest",step:2.5,unitW:"gilet (kg)",pose:"pushup",
+    tips:"Descente en 3 s jusqu'à l'étirement profond des pectoraux, corps gainé. Arrêter à 1 ou 2 répétitions de l'échec (la dernière série peut aller à l'échec).",muscles:"Pectoraux · Triceps"},
 
   /* ---- Jour 2 : Bas du corps ---- */
   deadlift:{name:"Soulevé de terre",note:"Deadlift",sets:4,lo:4,hi:6,rest:150,load:"kg",step:5,pose:"deadlift",
@@ -404,9 +421,9 @@ const EX = {
   /* ---- Jour 4 : Épaules · Bras · Gilet ---- */
   ohp:{name:"Développé militaire debout",note:"Barre libre",sets:4,lo:5,hi:7,rest:120,load:"kg",step:2.5,pose:"ohp",
     tips:"Fessiers et abdos verrouillés, barre au départ sur le haut des pectoraux. Pousser à la verticale sans impulsion des jambes, tête qui passe sous la barre en fin de mouvement.",muscles:"Deltoïdes · Triceps · Gainage"},
-  neutralpull:{name:"Tractions prise neutre",note:"Avec gilet lesté",sets:3,lo:6,hi:10,rest:75,load:"lest",step:2.5,pose:"neutralpull",
+  neutralpull:{name:"Tractions prise neutre",note:"Avec gilet lesté",sets:4,lo:6,hi:10,rest:75,load:"lest",step:2.5,pose:"neutralpull",
     tips:"Paumes face à face. Tirer les coudes vers les hanches pour cibler le milieu du dos et le brachial. Descente en 3 s.",muscles:"Milieu du dos · Brachial · Biceps"},
-  pushup:{name:"Pompes au gilet lesté",note:"Sur poignées ou surélevées",sets:3,lo:10,hi:15,rest:75,load:"lest",step:2.5,unitW:"gilet (kg)",pose:"pushup",
+  pushup:{name:"Pompes au gilet lesté",note:"Sur poignées ou surélevées",sets:4,lo:10,hi:15,rest:75,load:"lest",step:2.5,unitW:"gilet (kg)",pose:"pushup",
     tips:"Descente profonde pour étirer les pectoraux, corps aligné comme une planche, coudes à 45°. 1 à 2 reps en réserve.",muscles:"Pectoraux · Triceps · Gainage"},
   latraise:{name:"Élévations latérales haltères",note:"Plan de l'omoplate",sets:3,lo:12,hi:15,rest:20,load:"kg",step:1,unitW:"kg / haltère",pose:"latraise",
     tips:"Buste fixe, bras légèrement en avant du corps. Monter jusqu'à l'horizontale en menant avec les coudes, descente en 3 s. Sans élan.",muscles:"Deltoïdes moyens · Largeur des épaules"},
@@ -439,7 +456,7 @@ const DAYS = [
   {id:"j1",n:1,title:"Dos + Pectoraux",sub:"Force & Épaisseur",pose:"row",warm:"warmH",
    goal:"Tirages et poussées lourds en supersets antagonistes pour épaissir le dos et le torse.",
    obj:"Déplacer lourd sur les axes horizontaux et verticaux avec une phase négative de 3 s pour densifier dos et pectoraux.",
-   blocks:[["row","incline"],["pullup","dips"],["dbrow","cablefly"]]},
+   blocks:[["row","incline"],["pullup","dips"],["dbrow","cablefly"],["pullover","pushupf"]]},
   {id:"j2",n:2,title:"Bas du corps",sub:"Puissance & Chaîne postérieure",pose:"deadlift",warm:"warmB",
    goal:"Fondations, lombaires et réponse hormonale globale.",
    obj:"Construire une charpente solide : soulevé de terre lourd, squat et travail unilatéral, tronc gainé en permanence.",
@@ -457,7 +474,13 @@ const DAYS = [
    obj:"Squat lourd, chaîne postérieure, préhension et gainage anti-rotation, puis un finisher au gilet.",
    blocks:[["backsquat"],["rdl","pallof"],["farmer"],["emom"]]}
 ];
-DAYS.forEach(d=>{ d.ex=(d.warm?[d.warm]:[]).concat(...d.blocks); });
+DAYS.forEach(d=>{ d.base=d.blocks.map(b=>b.slice()); d.ex=(d.warm?[d.warm]:[]).concat(...d.blocks); });
+function applySwaps(){
+  const pr=(typeof S!=="undefined"&&S.profile)||{}, sw=pr.swaps||{}, cu=pr.custom||{};
+  for(const id in cu){ EX[id]={...cu[id],id}; }
+  DAYS.forEach(d=>{ d.blocks=d.base.map(b=>b.map(k=>sw[k]&&EX[sw[k]]?sw[k]:k)); d.ex=(d.warm?[d.warm]:[]).concat(...d.blocks); });
+}
+function origOf(k){ const sw=S.profile.swaps||{}; for(const o in sw) if(sw[o]===k) return o; return k; }
 const DAY = Object.fromEntries(DAYS.map(d=>[d.id,d]));
 const WEEKMAP = {1:"j1",2:"j2",3:"j3",4:"j4",5:"j5"}; // lundi → vendredi
 const STRENGTH = ["j1","j2","j4","j5"];
@@ -516,6 +539,9 @@ const POSES = {
   dips:{props:[{k:"path",d:"M76 80 H138 M130 80 V148"},{k:"vest"}],hl:["a","t"],
     A:{an:"hand",at:[104,80],t:168,a1:[2,0],l1:[12,-62]},
     B:{an:"hand",at:[104,80],t:150,a1:[-82,52],l1:[20,-70]}},
+  pullover:{props:[{k:"path",d:"M182 -22 V148"},{k:"cable",to:[178,-16]}],hl:["a"],
+    A:{an:"foot",at:[96,G],t:160,a1:[150,150],l1:[12,-6],l2:[-10,6]},
+    B:{an:"foot",at:[96,G],t:160,a1:[18,12],l1:[12,-6],l2:[-10,6]}},
   dbrow:{props:[{k:"path",d:"M70 119 H148 M80 119 V148 M138 119 V148"},{k:"db",at:"h1"}],hl:["a","t"],
     A:{an:"foot",at:[66,G],t:96,a1:[0,0],a2:[4,-4],l1:[10,-5],l2:[15,90]},
     B:{an:"foot",at:[66,G],t:96,a1:[-62,12],a2:[4,-4],l1:[10,-5],l2:[15,90]}},
@@ -707,9 +733,10 @@ const store = {
   del(k){ try{ localStorage.removeItem(k); }catch(e){} }
 };
 const LS="dep.data.v1", LSW="dep.workout.v1";
-const DEF_PROFILE = {bw:80, maint:2700, goals:{}, sound:true, updatedAt:0};
+const DEF_PROFILE = {bw:80, maint:2700, goals:{}, swaps:{}, custom:{}, sound:true, updatedAt:0};
 let S = store.get(LS, null) || {profile:{...DEF_PROFILE}, sessions:[]};
 S.profile = Object.assign({...DEF_PROFILE}, S.profile||{});
+applySwaps();
 S.sessions = Array.isArray(S.sessions)?S.sessions:[];
 let W = store.get(LSW, null);
 if(W&&W.v!==2) W=null;
@@ -735,13 +762,15 @@ async function initDB(){
         const ids=new Set(merged.map(s=>s.id));
         local.forEach(s=>{ if(!ids.has(s.id) && !s.synced){ merged.push(s); pushSession(s); } });
         S.sessions=merged.sort((a,b)=>a.date<b.date?-1:1);
-        if(prof && (prof.updatedAt||0)>=(S.profile.updatedAt||0)) S.profile=Object.assign({...DEF_PROFILE},prof);
+        if(prof && (prof.updatedAt||0)>=(S.profile.updatedAt||0)){ S.profile=Object.assign({...DEF_PROFILE},prof); applySwaps(); }
         else if(!prof || (S.profile.updatedAt||0)>(prof.updatedAt||0)) pushProfile();
         saveS(); if(!W) render(); else updateSyncBadge();
       }
     },()=>{ syncOn=false; updateSyncBadge(); });
   }catch(e){ DB=null; }
 }
+let SAMPLE=null;
+async function initSample(){ try{ const c=window.claude; if(!c||typeof c.use!=="function") return; SAMPLE=await c.use("sample"); }catch(e){ SAMPLE=null; } }
 async function pushSession(s){ if(!DB) return; try{ const c={...s}; delete c.synced; await DB.doc(s.id).set(c); s.synced=true; saveS(); }catch(e){} }
 let profTimer=null, profBusy=false;
 function pushProfile(){ if(!DB) return; clearTimeout(profTimer); profTimer=setTimeout(async()=>{ if(profBusy){ pushProfile(); return; } profBusy=true; try{ await DB.doc("profile").set({...S.profile}); }catch(e){} profBusy=false; },800); }
@@ -896,6 +925,7 @@ function exCard(k,lab,i){
       <div class="bigfig">${fig(e.pose,{anim:open})}</div>
       <div class="tipbox"><b>Consignes techniques</b>${e.tips}</div>
       ${t?`<div class="tgt ${t.up?"up":""}">${t.up?IC.up:IC.target}<span>${t.msg}</span></div>`:""}
+      ${e.kind?"":`<button class="btn ghost sm" data-a="swap" data-ex="${k}">${IC.repeat} ${origOf(k)!==k?"Exercice remplacé · changer":"Changer d'exercice"}</button>`}
     </div>
   </div>`;
 }
@@ -976,7 +1006,7 @@ function viewGoals(){
     return `<div class="goal"><div style="min-width:0"><div class="nm">${e.name}${e.load==="lest"?" <span class='muted' style='font-weight:500'>(lest)</span>":""}</div><div class="cur">Actuel : ${b?fmt(b.w)+" kg × "+b.r:"pas encore de donnée"}</div></div>
       <input id="goal-${k}" type="number" inputmode="decimal" placeholder="kg" value="${g}" data-goal="${k}" aria-label="Objectif ${e.name} en kg">
       <div class="bar"><i class="${f>=1?"full":""}" style="width:${Math.round(f*100)}%"></i></div></div>`; }).join("");
-  const week=[["Lun","Dos + Pectoraux","Rowing, incliné, tractions et dips lestés en supersets. ≈ 55 min."],["Mar","Bas du corps","Soulevé de terre lourd, front squat, fentes et leg curl. ≈ 55 min."],["Mer","Récupération active","Natation, marche rapide ou mobilité (30–45 min)."],["Jeu","Épaules · Bras · Gilet","Développé militaire, tractions et pompes au gilet, triset épaules, superset bras. ≈ 55 min."],["Ven","Bas du corps · Transport lourd","Back squat, RDL, Farmer's walk et EMOM au gilet. ≈ 55 min."],["Sam · Dim","Repos / Sports annexes","Surcompensation et recharge glycogénique. Sport plaisir sans viser la performance."]]
+  const week=[["Lun","Dos + Pectoraux","Rowing, incliné, tractions, dips lestés, pull-over et pompes au gilet en supersets. ≈ 75 min."],["Mar","Bas du corps","Soulevé de terre lourd, front squat, fentes et leg curl. ≈ 55 min."],["Mer","Récupération active","Natation, marche rapide ou mobilité (30–45 min)."],["Jeu","Épaules · Bras · Gilet","Développé militaire, tractions et pompes au gilet, triset épaules, superset bras. ≈ 65 min."],["Ven","Bas du corps · Transport lourd","Back squat, RDL, Farmer's walk et EMOM au gilet. ≈ 55 min."],["Sam · Dim","Repos / Sports annexes","Surcompensation et recharge glycogénique. Sport plaisir sans viser la performance."]]
     .map(r=>`<tr><td>${r[0]}</td><td><div style="font-weight:600">${r[1]}</div><div class="muted">${r[2]}</div></td></tr>`).join("");
   return `<div class="wrap stack">
     <header class="top"><div><div class="eyebrow">Cap & méthode</div><h1 style="margin-top:6px">Objectifs</h1></div></header>
@@ -989,7 +1019,7 @@ function viewGoals(){
       <div class="card rule"><div class="ic">${IC.up}</div><div><h4>Double progression</h4><p>Quand le haut de la fourchette est validé sur <strong>toutes</strong> les séries avec une technique propre (ex. 4 × 8 au rowing), ajoute <strong>+2,5 kg</strong> au haut du corps et <strong>+5 kg</strong> au bas du corps à la séance suivante. L'app te le propose automatiquement.</p></div></div>
       <div class="card rule"><div class="ic">${IC.target}</div><div><h4>1 à 2 reps en réserve</h4><p>Sur les gros polyarticulaires (soulevé de terre, squats, développés, rowing, tractions), arrête chaque série à <strong>1–2 répétitions de l'échec</strong>. Seule la dernière série d'isolation (élévations, curls, écartés) peut aller à l'échec.</p></div></div>
       <div class="card rule"><div class="ic">${IC.tempo}</div><div><h4>Tempo 3-1-1</h4><p>Descente freinée sur <strong>3 secondes</strong>, 1 s de pause en étirement ou en contraction, montée explosive. La tension mécanique sous charge lourde est le premier déclencheur de l'épaississement des fibres.</p></div></div>
-      <div class="card rule"><div class="ic">${IC.repeat}</div><div><h4>Supersets antagonistes</h4><p>Enchaîne A1 puis A2 avec le repos indiqué entre les deux, puis recommence. Le muscle opposé travaille pendant que l'autre récupère : même volume, séance tenue en <strong>moins d'une heure</strong>.</p></div></div>
+      <div class="card rule"><div class="ic">${IC.repeat}</div><div><h4>Supersets antagonistes</h4><p>Enchaîne A1 puis A2 avec le repos indiqué entre les deux, puis recommence. Le muscle opposé travaille pendant que l'autre récupère : même volume, volume élevé sans rallonger la séance.</p></div></div>
       <div class="card rule"><div class="ic">${IC.muscle}</div><div><h4>Gilet lesté</h4><p>Commence à <strong>10 kg</strong>. Ajoute <strong>2,5 kg</strong> dès que le haut de la fourchette est atteint partout. Au-delà de 20 kg aux tractions ou aux dips, passe à la <strong>ceinture de lest</strong>.</p></div></div>
       <div class="card rule"><div class="ic">${IC.flag}</div><div><h4>Semaine de décharge</h4><p>Toutes les <strong>6 semaines</strong>, ou si une charge stagne 2 séances de suite : 1 semaine avec <strong>40 % de séries en moins</strong> et des charges à −10 %. Tu repars plus fort.</p></div></div>
     </div>
@@ -1055,7 +1085,7 @@ function renderWorkout(){
     </div>
     <div class="wk-prog">${prog}</div>
     <div class="wk-body"><div class="wk-inner">
-      <div class="wk-head"><div class="row"><span class="eyebrow ac">${e.kind==="warm"?"Échauffement":(()=>{ const lb=blockLabels(d)[e.id]; return lb&&!d.recovery?(lb.size>1?blockKind(lb.size)+" "+lb.lab:"Bloc "+lb.L):"Séance"; })()}${e.kind==="warm"?" · 8 min":" · "+(workEx(d).indexOf(e.id)+1)+" / "+workEx(d).length}</span><span class="sp"></span><button class="badge" data-a="finish">${IC.flag.replace("<svg","<svg width='13' height='13'")} Terminer</button></div>
+      <div class="wk-head"><div class="row"><span class="eyebrow ac">${e.kind==="warm"?"Échauffement":(()=>{ const lb=blockLabels(d)[e.id]; return lb&&!d.recovery?(lb.size>1?blockKind(lb.size)+" "+lb.lab:"Bloc "+lb.L):"Séance"; })()}${e.kind==="warm"?" · 8 min":" · "+(workEx(d).indexOf(e.id)+1)+" / "+workEx(d).length}</span><span class="sp"></span>${e.kind?"":`<button class="badge" data-a="swap" data-ex="${e.id}" style="margin-right:6px">${IC.repeat.replace("<svg","<svg width='13' height='13'")} Changer</button>`}<button class="badge" data-a="finish">${IC.flag.replace("<svg","<svg width='13' height='13'")} Terminer</button></div>
       <h2>${e.name}</h2><p class="note">${e.note}</p></div>
       ${body}
     </div></div>
@@ -1216,6 +1246,78 @@ function summary(){
     return `<div class="sumrow"><span style="min-width:0">${e.name}${up?`<br><span class="up" style="font-size:12.5px;font-weight:600">↑ +${fmt(e.step)} kg la prochaine fois</span>`:""}</span><span class="r num">${setsTxt(l,e)}</span></div>`; }).join("");
   return {dur,sets,ton,rows};
 }
+/* Remplacement d'exercice */
+let SWAP={k:null,opts:null,busy:false,err:null,ctl:null};
+const POSE_HELP="row (rowing buste penché), incline (développé allongé ou incliné sur banc), pullup (traction à la barre), ohp (développé au-dessus de la tête debout), seatedrow (tirage assis poulie), reardelt (oiseau buste penché), deadlift, frontsquat, backsquat, lunge (fente), legcurl (flexion jambes allongé), legraise (relevé de jambes suspendu), dips, dbrow (rowing un bras en appui sur banc), pushup (pompe), plank (gainage), curl (flexion des coudes debout), skull (extension triceps allongé), facepull (tirage poulie haute vers le visage), rdl, farmer (marche chargée), swing (kettlebell), latraise (élévation des bras), shrug (haussement d'épaules), cablefly (écarté poulie), pallof (anti-rotation poulie), pullover (pull-over poulie bras tendus), airsquat, hinge (charnière de hanche)";
+function dayOfEx(k){ return (W&&DAY[W.dayId]&&DAY[W.dayId].ex.includes(k))?DAY[W.dayId]:(DAYS.find(d=>d.ex.includes(k))||DAYS[0]); }
+function openSwap(k){ SWAP={k,opts:null,busy:false,err:null,ctl:null}; renderSwap(); }
+function libFor(k){
+  const d=dayOfEx(k), e=EX[k], words=new Set(e.muscles.toLowerCase().split(/[ ·,]+/).filter(w=>w.length>4));
+  return Object.values(EX).filter(x=>!x.kind&&!x.custom&&!d.ex.includes(x.id)&&x.id!==origOf(k))
+    .map(x=>({x,sc:x.muscles.toLowerCase().split(/[ ·,]+/).filter(w=>words.has(w)).length}))
+    .filter(o=>o.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,6).map(o=>o.x);
+}
+function optCard(o,i,act){
+  return `<div class="opt"><div class="thumb">${fig(o.pose)}</div><div style="min-width:0"><h4>${o.name}</h4><div class="sub">${o.note||""}</div><div class="sub" style="color:var(--accent);font-weight:600">${range(o)}${o.per?" / "+o.per:""} · repos ${restTxt(o.rest)}</div>${o.why?`<p class="why">${o.why}</p>`:""}</div><button class="btn pri sm" data-a="${act}" data-v="${i}">Choisir</button></div>`;
+}
+function renderSwap(){
+  const k=SWAP.k, e=EX[k], o=origOf(k), lib=libFor(k);
+  let ai;
+  if(!SAMPLE) ai=`<p class="muted" style="font-size:13px">La suggestion par Claude fonctionne dans la version Claude de l'app. Tu peux choisir un exercice du programme ci-dessous.</p>`;
+  else if(SWAP.busy) ai=`<div class="think"><span class="spin"></span>Claude cherche 3 alternatives…<button class="badge" data-a="swap-stop">Arrêter</button></div>`;
+  else ai=`<button class="btn pri sm" data-a="swap-ai">${IC.repeat} Demander 3 alternatives à Claude</button>`;
+  modal(`<div class="eyebrow ac">Changer d'exercice</div><h3>${e.name}</h3>
+    ${o!==k?`<div class="tgt">${IC.info}<span>Remplace <strong>${EX[o].name}</strong> du programme. <button class="badge ac" data-a="swap-reset" style="margin-top:6px">Revenir à l'original</button></span></div>`:""}
+    <div class="field"><label for="swap-why">Pourquoi tu veux changer ? (optionnel)</label><input id="swap-why" type="text" placeholder="ex. gêne à l'épaule, machine prise…" value="${SWAP.why||""}" style="font-family:var(--f-body);font-size:15px;font-weight:500"></div>
+    <div class="chips">${["Pas le matériel","Gêne / douleur","Je n'aime pas","Trop de monde"].map(c=>`<button class="chip" data-a="swap-why" data-v="${c}">${c}</button>`).join("")}</div>
+    ${ai}
+    ${SWAP.err?`<p style="color:var(--danger);font-size:13.5px">${SWAP.err}</p>`:""}
+    ${SWAP.opts?`<div class="opts">${SWAP.opts.map((x,i)=>optCard(x,i,"swap-pick")).join("")}</div>`:""}
+    ${lib.length?`<div class="sec-title" style="margin-top:4px"><h3 style="font-size:16px">Ou dans le programme</h3></div><div class="opts">${lib.map((x,i)=>optCard(x,i,"swap-lib")).join("")}</div>`:""}
+    <button class="btn ghost sm" data-a="modal-close">Fermer</button>`);
+  SWAP.lib=lib;
+}
+function cleanOpt(o,e){
+  const num=(v,a,b,d)=>{ v=Math.round(+v); return isFinite(v)?Math.min(b,Math.max(a,v)):d; };
+  const load=["kg","lest","bw"].includes(o.load)?o.load:"kg";
+  const lo=num(o.lo,1,60,e.lo), hi=Math.max(lo,num(o.hi,1,60,e.hi));
+  return {name:String(o.name||"Exercice").slice(0,60),note:String(o.note||"").slice(0,70),why:String(o.why||"").slice(0,180),
+    sets:num(o.sets,1,6,e.sets),lo,hi,rest:num(o.rest,15,240,e.rest),load,step:load==="bw"?0:([1,2,2.5,5].includes(+o.step)?+o.step:e.step||2.5),
+    per:e.per,unit:e.unit,tips:String(o.tips||"").slice(0,300),muscles:String(o.muscles||e.muscles).slice(0,90),pose:POSES[o.pose]?o.pose:e.pose,custom:true};
+}
+async function askSwap(){
+  const k=SWAP.k, e=EX[k], d=dayOfEx(k);
+  SWAP.why=($("#swap-why")||{}).value||SWAP.why||""; SWAP.busy=true; SWAP.err=null; SWAP.ctl=new AbortController(); renderSwap();
+  const others=d.ex.filter(x=>x!==k&&!EX[x].kind).map(x=>EX[x].name).join(", ");
+  const prompt=`Tu es préparateur physique spécialisé en hypertrophie fonctionnelle, densité musculaire et conditionnement type forces spéciales.
+Séance : "${d.title} — ${d.sub}". L'utilisateur veut remplacer l'exercice "${e.name}" (${e.note} ; ${range(e)}${e.per?" par "+e.per:""} ; repos ${e.rest} s ; muscles : ${e.muscles}).
+Raison : ${SWAP.why||"non précisée"}.
+Matériel : salle complète (barres, haltères, poulies, bancs, kettlebells) + gilet lesté.
+Autres exercices de la séance, à ne pas reprendre : ${others}.
+Propose 3 alternatives qui ciblent les mêmes muscles avec le même rôle dans la séance et qui respectent la raison donnée. Garde le même nombre de séries et une fourchette proche.
+Réponds UNIQUEMENT avec ce JSON, en français :
+{"options":[{"name":"nom court","note":"précision courte (prise, matériel)","why":"une phrase : pourquoi c'est un bon remplaçant ici","sets":${e.sets},"lo":${e.lo},"hi":${e.hi},"rest":${e.rest},"load":"kg | lest | bw","step":2.5,"tips":"consignes techniques en 1 ou 2 phrases","muscles":"Muscle · Muscle","pose":"identifiant"}]}
+"load" vaut "kg" pour une charge externe, "lest" pour un poids du corps lesté, "bw" pour le poids du corps seul. "step" est l'incrément de charge en kg (1, 2, 2.5 ou 5).
+"pose" est l'illustration la plus proche parmi : ${POSE_HELP}.`;
+  try{
+    const r=await SAMPLE.json(prompt,{modelTier:"quick",signal:SWAP.ctl.signal});
+    const list=(r&&Array.isArray(r.options)?r.options:[]).slice(0,3).map(o=>cleanOpt(o,e));
+    if(!list.length) throw {code:"empty"};
+    SWAP.opts=list;
+  }catch(err){
+    const c=err&&err.code;
+    SWAP.err=c==="cancelled"?null:c==="not_granted"?"Accès à Claude refusé. Tu peux choisir un exercice du programme ci-dessous.":c==="rate_limited"?"Trop de demandes d'un coup. Réessaie dans une minute.":"Pas de réponse exploitable. Réessaie, ou choisis dans la liste ci-dessous.";
+    if(c==="not_granted") SAMPLE=null;
+  }
+  SWAP.busy=false; if(SWAP.k===k&&$("#modal").innerHTML) renderSwap();
+}
+function applyChoice(newId){
+  const o=origOf(SWAP.k), sw={...S.profile.swaps};
+  if(newId===o) delete sw[o]; else sw[o]=newId;
+  setProfile({swaps:sw}); applySwaps(); closeModal();
+  if(W){ const i=DAY[W.dayId].ex.indexOf(newId); if(i>=0) W.idx=i; saveW(); }
+  render();
+}
 function showFinish(){
   const sm=summary();
   modal(`<div class="eyebrow ac">Séance terminée</div><h2>Bien joué</h2>
@@ -1301,6 +1403,13 @@ document.addEventListener("click",ev=>{
       if(W){ resumeWk(); return; }
       startWorkout(b.dataset.day); break;
     case "pick": pick=b.dataset.day||null; render(); break;
+    case "swap": openSwap(b.dataset.ex); break;
+    case "swap-why": { const i=$("#swap-why"); if(i){ i.value=b.dataset.v; SWAP.why=b.dataset.v; } } break;
+    case "swap-ai": askSwap(); break;
+    case "swap-stop": if(SWAP.ctl) SWAP.ctl.abort(); break;
+    case "swap-reset": applyChoice(origOf(SWAP.k)); break;
+    case "swap-lib": applyChoice(SWAP.lib[+b.dataset.v].id); break;
+    case "swap-pick": { const o=SWAP.opts[+b.dataset.v], id="x"+Date.now().toString(36); const cu={...S.profile.custom,[id]:o}; setProfile({custom:cu}); EX[id]={...o,id}; applyChoice(id); } break;
     case "start-force": closeModal(); startWorkout(b.dataset.day); break;
     case "toggle-ex": openEx=openEx===b.dataset.ex?null:b.dataset.ex; render(); break;
     case "wk-close": modal(`<h3>Quitter la séance ?</h3><p class="muted">Tes séries validées sont gardées : tu pourras reprendre depuis l'accueil, ou abandonner la séance.</p><div class="btns"><button class="btn ghost sm" data-a="minimize">Mettre en pause</button><button class="btn sm" style="background:var(--danger);color:#fff" data-a="abandon">Abandonner</button></div>`); break;
@@ -1337,6 +1446,7 @@ document.addEventListener("input",ev=>{
   const t=ev.target;
   if(t.dataset.cur&&W){ const e=curEx(); const v=parseFloat(String(t.value).replace(",",".")); if(!isNaN(v)){ W.cur[e.id][t.dataset.cur]=v; saveW(); } }
   if(t.dataset.prof){ const v=parseFloat(t.value); setProfile({[t.dataset.prof]:isNaN(v)?0:v}); const n=$("#nres"); if(n){ const tmp=document.createElement("div"); tmp.innerHTML=nutriInner(); n.replaceWith(tmp.querySelector("#nres")); } }
+  if(t.id==="swap-why") SWAP.why=t.value;
   if(t.dataset.goal){ const v=parseFloat(t.value); const g={...S.profile.goals}; if(isNaN(v)||v<=0) delete g[t.dataset.goal]; else g[t.dataset.goal]=v; setProfile({goals:g}); }
 });
 document.addEventListener("change",ev=>{ if(ev.target.dataset.goal) render(); });
@@ -1352,5 +1462,5 @@ function showResume(){
 window.addEventListener("hashchange",()=>{ openEx=null; render(); window.scrollTo(0,0); });
 
 render();
-setTimeout(initDB,0);
+setTimeout(()=>{ initDB(); initSample(); },0);
 </script>
